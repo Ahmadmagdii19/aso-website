@@ -244,6 +244,15 @@ html[data-theme="navy"] .card h4{color:#8FB4E8}
 .cbox{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:var(--r);padding:24px;display:grid;gap:18px}
 .cbox .k{display:block;font-size:.76rem;color:#CFE0F7;font-weight:600}
 .cbox .val{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:4px;font-weight:500}
+.cform{display:grid;gap:14px;margin-top:4px}
+.cform label{display:grid;gap:6px}
+.cform input,.cform textarea{width:100%;font:inherit;font-size:.95rem;color:#fff;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.22);border-radius:10px;padding:12px 14px;outline:none;transition:border-color .2s,background .2s}
+.cform input::placeholder,.cform textarea::placeholder{color:rgba(255,255,255,.45)}
+.cform input:focus,.cform textarea:focus{border-color:#8CC4FF;background:rgba(255,255,255,.1)}
+.cform textarea{resize:vertical;min-height:150px}
+.cform .crow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cform .cmsg{font-size:.9rem;color:#CFE0F7}
+.cform .cmsg.ok{color:#9FE3B5}.cform .cmsg.err{color:#FFB4A8}
 .copybtn{font-size:.76rem;font-weight:600;background:transparent;border:1px solid rgba(255,255,255,.4);border-radius:3px;color:#fff;padding:4px 10px;cursor:pointer}
 .copybtn:hover{background:#fff;color:var(--navy)}
 @media (max-width:860px){.contact .grid{grid-template-columns:1fr}}
@@ -485,9 +494,13 @@ html[data-theme="glass"] .sectors div::before{display:none}
   <div class="rv"><p class="kicker">Contact</p><h2 style="margin-top:12px">Have a project to tender?</h2><p class="lead" style="margin-top:16px">Send your drawings, BOQ or scope of work. Our team replies with a priced proposal and a programme.</p></div>
   <div class="cbox rv">
     <div><span class="k">Email</span><div class="val"><span id="em">info@aso-construction.com</span><button class="copybtn" data-copy="em" type="button">Copy</button></div></div>
-    <div><span class="k">Head office</span><div class="val"><span>Bldg 6603, Ahmad Ibn Baiya St., Al-Loaloa Dist., Jeddah 23821, Kingdom of Saudi Arabia</span></div></div>
-    <div><span class="k">National short address</span><div class="val"><span>JHYA6603</span></div></div>
-    <div><span class="k">Web</span><div class="val"><span>www.aso-construction.com</span></div></div>
+    <form class="cform" id="cform" novalidate>
+      <label><span class="k">Your name</span><input type="text" name="name" autocomplete="name" required placeholder="Full name"></label>
+      <label><span class="k">Your email</span><input type="email" name="email" autocomplete="email" required placeholder="name@company.com"></label>
+      <label><span class="k">What do you need?</span><textarea name="message" rows="6" required placeholder="Tell us about your project, scope, location and timeline…"></textarea></label>
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="crow"><button type="submit" class="btn primary" id="csend">Send message</button><span class="cmsg" id="cmsg" role="status"></span></div>
+    </form>
   </div>
 </div></section>
 </main>
@@ -720,6 +733,14 @@ html[data-theme="glass"] .sectors div::before{display:none}
     s.addEventListener('click',function(e){if(e.target.closest('.ar'))return;lbOpen(imgs,i)});
     var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){s.classList.add('show');setTimeout(function(){s.classList.remove('show')},2200);auto()}else clearInterval(timer)},{threshold:.4});io.observe(s)});
   /* copy */
+  (function(){var f=document.getElementById('cform');if(!f)return;var m=document.getElementById('cmsg'),b=document.getElementById('csend');
+  f.addEventListener('submit',function(e){e.preventDefault();if(!f.checkValidity()){m.className='cmsg err';m.textContent='Please fill in your name, email and message.';return}
+    var d=new FormData(f),o={};d.forEach(function(v,k){o[k]=v});o._subject='Website enquiry from '+o.name;o._template='table';o._captcha='false';
+    b.disabled=true;m.className='cmsg';m.textContent='Sending…';
+    fetch('https://formsubmit.co/ajax/info@aso-construction.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(o)})
+    .then(function(r){return r.json()}).then(function(r){if(r&&(r.success==='true'||r.success===true)){m.className='cmsg ok';m.textContent='Thank you — your message has been sent. We will reply shortly.';f.reset()}else{throw 0}})
+    .catch(function(){m.className='cmsg err';m.innerHTML='Could not send. Please email us directly at <a href="mailto:info@aso-construction.com" style="color:#fff">info@aso-construction.com</a>.'})
+    .finally(function(){b.disabled=false})});})();
   [].forEach.call(document.querySelectorAll('.copybtn'),function(b){b.addEventListener('click',function(){var el=document.getElementById(b.dataset.copy);
     function sel(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected'}
     try{navigator.clipboard.writeText(el.textContent).then(function(){b.textContent='Copied'},sel)}catch(e){sel()}setTimeout(function(){b.textContent='Copy'},1800)})});
