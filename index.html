@@ -377,7 +377,6 @@ html[data-theme="glass"] .sectors div::before{display:none}
   <canvas id="gl" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="copy">
-      <p class="kicker">Ali Sameer Otaibi Est. · Classified contractor · Jeddah</p>
       <h1 id="h1"><span class="l"><span>Building the Kingdom's</span></span><span class="l"><span>landmarks for two decades.</span></span></h1>
       <p class="lead">Airports, towers, hotels, factories and secure facilities, delivered with our own engineers, crews and plant across civil, MEP, steel and fit-out works.</p>
       <div class="acts"><a class="btn pri" href="#projects">View projects</a><a class="btn" href="#contact">Send us a tender</a></div>
@@ -646,7 +645,7 @@ html[data-theme="glass"] .sectors div::before{display:none}
   function setProgress(p,fade,t){lg.setDrawRange(0,cnt(lines,p)*2);pg.setDrawRange(0,cnt(pts,p));qm.uniforms.p.value=p;qm.uniforms.fade.value=fade;var lp=(t>BUILD?1+Math.min(1,(t-BUILD)/3)*.52:0);[winM,winM2,crownM].forEach(function(m){m.uniforms.p.value=lp;m.uniforms.fade.value=fade;m.uniforms.t.value=pt});bcnM.uniforms.p.value=p;bcnM.uniforms.fade.value=fade*(Math.sin(pt*4)>0?1:.2);tipM.uniforms.p.value=p;tipM.uniforms.fade.value=fade*(Math.sin(pt*3)>-.2?1:.15);
     co=Math.min(1,Math.max(0,(p-.1)/.05))*fade*(p>=1?.6:.95);craneParts.forEach(function(m){m.opacity=co});beacon.uniforms.op.value=co*(Math.sin(pt*7)>0?1:.15);mastB.uniforms.op.value=co*(Math.sin(pt*7+1.5)>0?1:.15);
     for(var i=stages.length-1;i>=0;i--)if(p>=stages[i][0]){break}}
-  function resize(){var r=cv.getBoundingClientRect(),w=r.width,h=r.height;rd.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();var m=w<=860;G.position.x=m?0:50;G.position.y=m?-12:0;G.scale.setScalar(m?.8:.95)}addEventListener('resize',resize);resize();
+  function resize(){var r=cv.getBoundingClientRect(),w=r.width,h=r.height;rd.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();var m=w<=860;G.position.x=m?0:50;G.position.y=m?-12:-top/2*.95;G.scale.setScalar(m?.8:.95)}addEventListener('resize',resize);resize();
   cv.style.pointerEvents='auto';cv.addEventListener('pointerdown',function(e){dragging=true;lx=e.clientX;ly=e.clientY});addEventListener('pointerup',function(){dragging=false});
   addEventListener('pointermove',function(e){if(dragging){vx=(e.clientX-lx)*.005;vy=(e.clientY-ly)*.003;rotY+=vx;rotX+=vy;lx=e.clientX;ly=e.clientY}tx=(e.clientX/innerWidth-.5);ty=(e.clientY/innerHeight-.5)},{passive:true});if(reduceM){paused=true;pt=BUILD}
   var vis=true;new IntersectionObserver(function(es){vis=es[0].isIntersecting},{threshold:0}).observe(cv);
