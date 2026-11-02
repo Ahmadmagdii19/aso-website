@@ -265,8 +265,9 @@ footer img{height:44px;width:auto}
 /* loader + lightbox */
 #load{position:fixed;inset:0;z-index:300;background:var(--navy);display:grid;place-items:center;transition:transform .8s cubic-bezier(.76,0,.24,1)}
 #load.off{transform:translateY(-100%)}
-#load img{height:72px;width:auto}
-#load .bar{width:140px;height:2px;background:rgba(255,255,255,.15);margin-top:16px;overflow:hidden;border-radius:1px}
+#load>div{display:grid;justify-items:center;width:max-content}
+#load img{height:72px;width:auto;display:block}
+#load .bar{width:100%;height:2px;background:rgba(255,255,255,.15);margin-top:18px;overflow:hidden;border-radius:1px}
 #load .bar i{display:block;height:100%;width:0;background:#fff;transition:width .8s ease}
 .lb{position:fixed;inset:0;background:rgba(10,16,30,.95);z-index:220;display:grid;place-items:center;padding:24px}
 .lb[hidden]{display:none}
