@@ -765,7 +765,7 @@ html[data-theme="glass"] .sectors div::before{display:none}
     b.disabled=true;m.className='cmsg';m.textContent='Sending…';
     fetch('https://formsubmit.co/ajax/info@aso-construction.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(o)})
     .then(function(r){return r.json()}).then(function(r){if(r&&(r.success==='true'||r.success===true)){m.className='cmsg ok';m.textContent='Thank you — your message has been sent. We will reply shortly.';f.reset()}else{throw 0}})
-    .catch(function(){m.className='cmsg err';m.innerHTML='Could not send. Please email us directly at <a href="mailto:info@aso-construction.com" style="color:#fff">info@aso-construction.com</a>.'})
+    .catch(function(){var body='Name: '+o.name+'\nEmail: '+o.email+'\n\n'+o.message;var href='mailto:info@aso-construction.com?subject='+encodeURIComponent('Website enquiry from '+o.name)+'&body='+encodeURIComponent(body);m.className='cmsg err';m.innerHTML='Our form service is temporarily unavailable — we have opened your email app with your message ready to send. If it did not open, email us at <a href="'+href+'" style="color:#fff">info@aso-construction.com</a>.';try{window.location.href=href}catch(e){}})
     .finally(function(){b.disabled=false})});})();
   [].forEach.call(document.querySelectorAll('.copybtn'),function(b){b.addEventListener('click',function(){var el=document.getElementById(b.dataset.copy);
     function sel(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected'}
