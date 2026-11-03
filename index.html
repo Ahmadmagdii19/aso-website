@@ -707,7 +707,7 @@ html[data-theme="glass"] .sectors div::before{display:none}
   function wordsOn(){var H=innerHeight;WR.forEach(function(o){var r=o.el.getBoundingClientRect();if(r.bottom<0||r.top>H)return;var L=H*.92,p=Math.min(Math.max((L-r.top)/Math.max(r.height*.55,1),0),1),n=Math.round(p*o.w.length);for(var i=0;i<o.w.length;i++)o.w[i].classList.toggle('on',i<n)})}
   function onScroll(){var y=scrollY;nav.classList.toggle('solid',y>60);var h=document.documentElement.scrollHeight-innerHeight;prog.style.width=(h>0?y/h*100:0)+'%';wordsOn()}
   addEventListener('scroll',onScroll,{passive:true});onScroll();
-  var links=[].slice.call(nav.querySelectorAll('li a')),secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))});
+  var links=[].slice.call(nav.querySelectorAll('li a[href^="#"]')),secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))});
   var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)links.forEach(function(a,i){a.classList.toggle('on',secs[i]===e.target)})})},{rootMargin:'-35% 0px -55% 0px'});
   secs.forEach(function(s){if(s)so.observe(s)});
   var ro=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px'});
